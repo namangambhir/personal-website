@@ -404,35 +404,28 @@
 }
 .name-latin { display: inline-block; }
 .name-intro .hero-name .name-latin,
-.hero-name.is-anim .name-latin { visibility: hidden; }
+.hero-name.is-typing .name-latin { visibility: hidden; }
 
-/* The animated copy sits exactly over the real name */
-.name-anim {
+/* The typed copy sits exactly over the real name */
+.name-type {
   position: absolute;
   left: 0;
   top: 0;
   white-space: pre;
   pointer-events: none;
 }
-.name-anim .ch {
-  display: inline-grid;
-  vertical-align: baseline;
-  transition: width 450ms cubic-bezier(0.6, 0, 0.2, 1);
+.type-text.is-deva { font-family: "Tiro Devanagari Hindi", var(--font-serif); }
+.type-caret {
+  display: inline-block;
+  width: 0.055em;
+  height: 0.82em;
+  margin-left: 0.04em;
+  vertical-align: -0.06em;
+  background: var(--red-ink);
+  animation: caret-blink 1s steps(1) infinite;
 }
-.name-anim .d,
-.name-anim .l {
-  grid-area: 1 / 1;
-  align-self: baseline;
-  justify-self: start;
-  white-space: pre;
-  transition: opacity 300ms var(--ease),
-              transform 450ms cubic-bezier(0.6, 0, 0.2, 1),
-              filter 300ms var(--ease);
-}
-.name-anim .d { font-family: "Tiro Devanagari Hindi", var(--font-serif); }
-.name-anim .l { opacity: 0; transform: translateY(0.45em); }
-.name-anim .is-turned .d { opacity: 0; transform: translateY(-0.5em); filter: blur(3px); }
-.name-anim .is-turned .l { opacity: 1; transform: none; }
+@keyframes caret-blink { 50% { opacity: 0; } }
+.type-caret.is-solid { animation: none; }
 
 /* The gloss: a small italic line under the name, on hover, focus or tap */
 .name-gloss {
