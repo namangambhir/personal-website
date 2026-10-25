@@ -3,91 +3,135 @@
    plain Latin text in the HTML, and the gloss under it works on hover and
    focus with CSS alone.
 
-   This adds one thing. When the home page is opened from outside the site
-   (a link, a bookmark, a reload) the name appears in Devanagari, holds for
-   a moment, and crossfades to Latin. Coming back from another page of the
-   site skips it, so it never gets in the way of someone browsing. The script adds
-   the Devanagari itself, so if it fails the page simply shows the Latin
-   name. Any click, key or scroll skips straight to the end. */
+   This adds the name intro. When the home page is opened from outside the
+   site (a link, a bookmark, a reload), the name appears in Devanagari and
+   then transliterates itself, one syllable at a time, left to right:
+   न becomes Na, म becomes ma, and so on, each syllable dropping away as
+   its Latin spelling rises in and the word reflows to its Latin width.
+   Then the gloss under the name ("serious greetings") shows for a moment.
+
+   Coming back from another page of the site skips it. Any click, key or
+   scroll ends it at once. If anything fails, the Latin name is simply
+   there, because the script builds the animated copy itself. */
 (function () {
   'use strict';
 
-  var HOLD_MS = 1100;      /* how long the Devanagari stays on screen */
-  var SWAP_MS = 650;       /* length of the crossfade */
-  var FONT_WAIT_MS = 1000; /* give up waiting for the Devanagari font after this */
+  var HOLD_MS = 900;        /* Devanagari on screen before the first syllable turns */
+  var STEP_MS = 120;        /* gap between one syllable turning and the next */
+  var TURN_MS = 450;        /* how long one syllable takes to turn */
+  var GLOSS_MS = 2600;      /* how long the gloss stays up afterwards */
+  var FONT_WAIT_MS = 1200;  /* never wait longer than this for fonts */
+
+  /* Each pair is one Devanagari syllable and its Latin spelling. */
+  var SYLLABLES = [
+    ['न', 'Na'], ['म', 'ma'], ['न', 'n'],
+    [' ', ' '],
+    ['गं', 'Gam'], ['भी', 'bhi'], ['र', 'r']
+  ];
 
   var name = document.querySelector('.hero-name');
+  var root = document.documentElement;
   if (!name) return;
+
+  function release() { root.classList.remove('name-intro'); }
 
   var reduced = window.matchMedia &&
                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fromSite = false;
   try {
+    var nav = performance.getEntriesByType('navigation')[0];
     fromSite = !!document.referrer &&
                new URL(document.referrer).origin === location.origin &&
-               performance.getEntriesByType('navigation')[0].type !== 'reload';
+               !(nav && nav.type === 'reload');
   } catch (e) { fromSite = false; }
-  if (reduced || fromSite) {
-    document.documentElement.classList.remove('name-intro');
-    return;
-  }
-
-  var deva = document.createElement('span');
-  deva.className = 'name-deva';
-  deva.setAttribute('aria-hidden', 'true');
-  deva.lang = 'hi';
-  deva.textContent = 'नमन गंभीर';
+  if (reduced || fromSite) { release(); return; }
 
   var timers = [];
   var done = false;
+  var anim = null;
+  var cells = [];
+
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
 
   function cleanup() {
-    document.documentElement.classList.remove('name-intro');
-    if (deva.parentNode) deva.parentNode.removeChild(deva);
-    name.classList.remove('is-deva', 'is-swapping');
+    release();
+    if (anim && anim.parentNode) anim.parentNode.removeChild(anim);
+    name.classList.remove('is-anim');
   }
 
-  function finish() {
+  function finish(keepGloss) {
     if (done) return;
     done = true;
     timers.forEach(clearTimeout);
-    document.removeEventListener('click', finish);
-    document.removeEventListener('keydown', finish);
-    window.removeEventListener('scroll', finish);
+    document.removeEventListener('click', skip);
+    document.removeEventListener('keydown', skip);
+    window.removeEventListener('scroll', skip);
     cleanup();
+    if (keepGloss === true) {
+      name.classList.add('gloss-peek');
+      setTimeout(function () { name.classList.remove('gloss-peek'); }, GLOSS_MS);
+    }
+  }
+  function skip() { finish(false); }
+
+  function build() {
+    anim = document.createElement('span');
+    anim.className = 'name-anim';
+    anim.setAttribute('aria-hidden', 'true');
+    SYLLABLES.forEach(function (pair) {
+      var cell = document.createElement('span');
+      cell.className = 'ch';
+      var d = document.createElement('span');
+      d.className = 'd';
+      d.lang = 'hi';
+      d.textContent = pair[0];
+      var l = document.createElement('span');
+      l.className = 'l';
+      l.textContent = pair[1];
+      cell.appendChild(d);
+      cell.appendChild(l);
+      anim.appendChild(cell);
+      cells.push({ cell: cell, d: d, l: l });
+    });
+    name.insertBefore(anim, name.firstChild);
+    name.classList.add('is-anim');
+    release();
+
+    /* Lock each cell to its Devanagari width; it eases to the Latin width
+       as it turns, so the word reflows smoothly instead of jumping. */
+    cells.forEach(function (c) {
+      c.dw = c.d.getBoundingClientRect().width;
+      c.lw = c.l.getBoundingClientRect().width;
+      c.cell.style.width = c.dw + 'px';
+    });
   }
 
-  function swap() {
+  function run() {
     if (done) return;
-    name.classList.add('is-swapping');
-    timers.push(setTimeout(finish, SWAP_MS + 50));
+    try { build(); } catch (e) { finish(false); return; }
+
+    cells.forEach(function (c, i) {
+      later(function () {
+        c.cell.style.width = c.lw + 'px';
+        c.cell.classList.add('is-turned');
+      }, HOLD_MS + i * STEP_MS);
+    });
+    later(function () { finish(true); },
+          HOLD_MS + (cells.length - 1) * STEP_MS + TURN_MS + 80);
   }
 
-  function start() {
-    if (done) return;
-    timers.push(setTimeout(swap, HOLD_MS));
-  }
+  document.addEventListener('click', skip);
+  document.addEventListener('keydown', skip);
+  window.addEventListener('scroll', skip, { passive: true });
 
-  try {
-    name.insertBefore(deva, name.firstChild);
-    name.classList.add('is-deva');
-    document.documentElement.classList.remove('name-intro');
-  } catch (e) {
-    cleanup();
-    return;
-  }
-
-  document.addEventListener('click', finish);
-  document.addEventListener('keydown', finish);
-  window.addEventListener('scroll', finish, { passive: true });
-
-  /* Wait for the Devanagari font so the first thing seen is the real
-     letterform, not a fallback, but never longer than FONT_WAIT_MS. */
+  /* Measure only once both fonts are in, or the widths would be wrong. */
   var started = false;
-  function startOnce() { if (!started) { started = true; start(); } }
+  function startOnce() { if (!started) { started = true; run(); } }
   if (document.fonts && document.fonts.load) {
-    document.fonts.load('1em "Tiro Devanagari Hindi"', deva.textContent)
-      .then(startOnce, startOnce);
+    Promise.all([
+      document.fonts.load('1em "Tiro Devanagari Hindi"', 'नमन गंभीर'),
+      document.fonts.load('1em "Charis SIL"', 'Naman Gambhir')
+    ]).then(startOnce, startOnce);
   }
   setTimeout(startOnce, FONT_WAIT_MS);
 })();

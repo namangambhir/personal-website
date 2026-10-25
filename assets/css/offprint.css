@@ -403,26 +403,36 @@
   outline-offset: 6px;
 }
 .name-latin { display: inline-block; }
-.name-intro .name-latin { opacity: 0; }
-.name-deva {
+.name-intro .hero-name .name-latin,
+.hero-name.is-anim .name-latin { visibility: hidden; }
+
+/* The animated copy sits exactly over the real name */
+.name-anim {
   position: absolute;
   left: 0;
-  top: 0.08em;
-  font-family: "Tiro Devanagari Hindi", var(--font-serif);
-  font-weight: 400;
-  white-space: nowrap;
+  top: 0;
+  white-space: pre;
   pointer-events: none;
 }
-.hero-name.is-deva .name-latin { opacity: 0; }
-.hero-name.is-swapping .name-latin {
-  opacity: 1;
-  transition: opacity 600ms var(--ease);
+.name-anim .ch {
+  display: inline-grid;
+  vertical-align: baseline;
+  transition: width 450ms cubic-bezier(0.6, 0, 0.2, 1);
 }
-.hero-name.is-swapping .name-deva {
-  opacity: 0;
-  transform: translateY(-0.12em);
-  transition: opacity 450ms var(--ease), transform 600ms var(--ease);
+.name-anim .d,
+.name-anim .l {
+  grid-area: 1 / 1;
+  align-self: baseline;
+  justify-self: start;
+  white-space: pre;
+  transition: opacity 300ms var(--ease),
+              transform 450ms cubic-bezier(0.6, 0, 0.2, 1),
+              filter 300ms var(--ease);
 }
+.name-anim .d { font-family: "Tiro Devanagari Hindi", var(--font-serif); }
+.name-anim .l { opacity: 0; transform: translateY(0.45em); }
+.name-anim .is-turned .d { opacity: 0; transform: translateY(-0.5em); filter: blur(3px); }
+.name-anim .is-turned .l { opacity: 1; transform: none; }
 
 /* The gloss: a small italic line under the name, on hover, focus or tap */
 .name-gloss {
@@ -445,6 +455,7 @@
   font-style: normal;
 }
 .hero-name:hover .name-gloss,
+.hero-name.gloss-peek .name-gloss,
 .hero-name:focus .name-gloss,
 .hero-name:focus-within .name-gloss {
   opacity: 1;
