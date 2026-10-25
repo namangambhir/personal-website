@@ -1,0 +1,750 @@
+/* ==========================================================================
+   offprint.css
+   Every page: About, CV, Research and Contact. The journal offprint world,
+   ink on cool paper. The CV is set like a results table in a paper.
+   ========================================================================== */
+
+/* ---------- Series band ---------- */
+/* The page's h1, set as the slate band at the top of a working-paper series */
+.series-band {
+  max-width: var(--content);
+  margin-bottom: var(--space-4);
+  padding: 0.35rem 0.75rem;
+  background: var(--slate);
+  color: var(--on-slate);
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Groups of items ---------- */
+/* The group runs the full content width, so the band, headings, titles and
+   link rows line up with it. Running prose inside is pulled back to --prose
+   on its own, because a 60rem line of body text is too long to read. */
+.offprint-group {
+  max-width: var(--content);
+  margin-top: var(--space-5);
+}
+.offprint-group:first-of-type { margin-top: 0; }
+
+.offprint-group > h2 {
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--slate);
+}
+
+/* ---------- One item ---------- */
+.item {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+.item:first-of-type {
+  margin-top: var(--space-3);
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Titles are content, not section headings, so they stay in normal case */
+.item-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-variant-caps: normal;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.item-authors {
+  margin: var(--space-1) 0 0;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  text-indent: 0;
+}
+
+.item-status {
+  margin: 0;
+  font-style: italic;
+  text-indent: 0;
+}
+
+/* ---------- Abstract: every paragraph is in the HTML ----------
+   With JavaScript off the whole abstract is simply on the page. research.js
+   folds it down to the first paragraph and moves the toggle to the end of
+   the last paragraph you can see, so the text never looks like it stops
+   mid-abstract. */
+.abstract {
+  margin-top: var(--space-2);
+}
+
+/* Folding waits for research.js to mark the abstract, not just for the page
+   to have JS at all. If the script is stale, blocked or throws, nothing is
+   marked, so the whole abstract stays on the page instead of paragraphs
+   being hidden with no working control to reveal them. */
+.abstract.is-collapsible:not(.is-open) > p:nth-of-type(n + 2) { display: none; }
+
+/* Paragraphs are separated by space rather than a first line indent, so each
+   one starts flush left. */
+.abstract > p {
+  max-width: var(--prose);
+  margin: var(--space-3) 0 0;
+  text-indent: 0;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.abstract > p:first-of-type { margin-top: 0; }
+
+/* The toggle does nothing without JS, so it is absent until JS says so. It
+   reads as a continuation of the sentence, not as a button. */
+.abstract-toggle { display: none; }
+.abstract.is-collapsible .abstract-toggle {
+  display: inline;
+  margin-left: 0.4em;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--slate);
+  font: inherit;
+  font-style: italic;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.abstract-toggle[aria-expanded="false"]::before { content: "\25B8\00A0"; }
+.abstract-toggle[aria-expanded="true"]::before  { content: "\25BE\00A0"; }
+.abstract-toggle:hover { text-decoration: underline; }
+.abstract-toggle:focus-visible { outline: 2px solid var(--red-ink); outline-offset: 2px; }
+
+/* ---------- Two columns: abstract, then a margin column ----------
+   Only an item that actually has a margin column becomes a grid, so items
+   without one stay full width. Where :has() is unsupported the item stays a
+   single column and the aside drops underneath, which is the same thing the
+   narrow layout below does, so nothing breaks. */
+.item:has(.item-aside) {
+  display: grid;
+  grid-template-columns: minmax(0, 68ch) minmax(13.5rem, 16.5rem);
+  justify-content: space-between;
+  column-gap: var(--space-5);
+  align-items: start;
+}
+.item > .item-title,
+.item > .item-status { grid-column: 1 / -1; }
+.item-body,
+.item-aside { min-width: 0; }
+
+.item-aside { font-size: 0.9rem; }
+
+/* In a narrow column the links stack instead of running across */
+.item-aside .item-links { margin-top: 0; }
+.item-aside .item-links > * { display: block; }
+.item-aside .item-links > * + * { margin-left: 0; margin-top: var(--space-1); }
+.js .item-aside .copy-bib { display: block; }
+
+.item-date {
+  margin: var(--space-3) 0 0;
+  text-indent: 0;
+  font-style: italic;
+}
+
+.keyfig-head {
+  margin: var(--space-4) 0 var(--space-1);
+  font-size: 0.9rem;
+}
+
+/* A journal table in miniature: thin rules top and bottom, nothing else */
+.keyfig {
+  margin: 0;
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--text);
+  border-bottom: 1px solid var(--text);
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.keyfig > div + div { margin-top: var(--space-2); }
+.keyfig dt {
+  color: var(--slate);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+.keyfig dd {
+  margin: 0;
+  line-height: 1.25;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* ---------- Links row ---------- */
+.item-links {
+  margin: var(--space-2) 0 0;
+  text-indent: 0;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+}
+.item-links > * + * { margin-left: var(--space-3); }
+
+.item-links .pending {
+  color: var(--slate);
+  font-style: italic;
+}
+
+/* The copy button needs JS, so it is absent until JS says otherwise */
+.copy-bib { display: none; }
+.js .copy-bib {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--slate);
+  font: inherit;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+.copy-bib:hover { text-decoration-thickness: 2px; }
+.copy-bib:focus-visible { outline: 2px solid var(--red-ink); outline-offset: 2px; }
+
+/* ---------- Results table: regression style, horizontal rules only ---------- */
+.results-wrap { overflow-x: auto; margin-top: var(--space-3); }
+
+/* width: auto so the table is only as wide as its columns need, sitting flush
+   left with everything else in the column. If it outgrows the column,
+   .results-wrap scrolls instead of the page.
+
+   It also sets its own type rather than taking the running prose settings it
+   would otherwise inherit from body: hyphenation off so no coefficient or
+   label is ever broken with a hyphen, lining tabular figures so the digits
+   line up in a column, and a tighter line-height than prose wants. */
+.results {
+  width: auto;
+  border-collapse: collapse;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  font-size: 0.85em;
+  line-height: 1.3;
+  hyphens: none;
+  -webkit-hyphens: none;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.results caption {
+  padding-bottom: var(--space-1);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  text-align: left;
+}
+.results th,
+.results td {
+  padding: 0.2rem 0 0.2rem 1.4rem;
+  font-weight: 400;
+  text-align: right;
+  white-space: nowrap;
+}
+.results th:first-child,
+.results td:first-child {
+  padding-left: 0;
+  text-align: left;
+  white-space: normal;
+}
+.results thead th { border-bottom: 1px solid var(--text); }
+/* Standard errors sit directly under their coefficient, as one entry */
+.results tbody tr.se td { padding-top: 0; }
+.results .se td {
+  font-size: 0.9em;
+  line-height: 1.1;
+}
+.results tbody tr.gap > * { padding-top: 0.7rem; }
+
+.results-notes {
+  max-width: var(--prose);
+  margin: var(--space-2) 0 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  text-indent: 0;
+  text-align: left;
+}
+
+/* ==========================================================================
+   Home page
+   ========================================================================== */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 44rem) auto;
+  grid-template-areas:
+    "name  photo"
+    "text  photo"
+    "acts  photo";
+  column-gap: 4.5rem;
+  justify-content: start;
+  align-items: start;
+  max-width: var(--content);
+}
+
+/* The one large thing on the site, per the brief */
+.hero-name {
+  grid-area: name;
+  margin-bottom: var(--space-4);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-variant-caps: normal;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.about-text {
+  grid-area: text;
+  position: relative;            /* the redaction bars measure against this */
+  max-width: var(--prose-wide);
+}
+
+/* Hyphenation is off here, so no word is ever split across a line. That is
+   what makes the column wider than the rest of the site's prose: justified
+   text with no hyphens needs the extra room or the word spacing goes gappy. */
+.about-text > p {
+  margin: var(--space-3) 0 0;
+  text-indent: 0;
+  text-align: left;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.about-text > p:first-child { margin-top: 0; }
+
+.hero-actions {
+  grid-area: acts;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  text-indent: 0;
+}
+
+/* Sits against the text block rather than the top of the name, so the circle
+   reads as part of the paragraph column instead of floating above it. */
+.hero-aside {
+  grid-area: photo;
+  align-self: center;
+}
+
+/* Circular, because the source photo is a circular crop on a grey field.
+   The clip sits just inside the photo's own edge, so no grey shows. */
+.portrait {
+  display: block;
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border: 1px solid var(--slate);
+  border-radius: 0;
+  background: none;
+  color: var(--text);
+  text-decoration: none;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.btn:hover { background: var(--slate); color: var(--on-slate); }
+.btn:focus-visible { outline: 2px solid var(--red-ink); outline-offset: 2px; }
+
+.btn-primary { background: var(--slate); color: var(--on-slate); }
+.btn-primary:hover { background: var(--text); border-color: var(--text); color: var(--surface); }
+
+/* ---------- Current work ---------- */
+.current-work {
+  max-width: var(--content);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  row-gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.work-label {
+  margin: 0;
+  color: var(--slate);
+  text-indent: 0;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+}
+.work-title {
+  margin: var(--space-1) 0 0;
+  font-size: 1.05rem;
+  font-variant-caps: normal;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+.work-desc {
+  max-width: var(--prose);
+  margin: var(--space-2) 0 0;
+  text-indent: 0;
+}
+.work-more { margin: var(--space-4) 0 0; text-indent: 0; }
+
+/* ---------- Redaction reveal ----------
+   Every bar is built by home.js and measured from the real line boxes, so
+   they match whatever the text actually did at this width. Nothing here is
+   hidden up front: the script hides what it is going to bring back, so a
+   blocked or broken script leaves a finished, readable page. */
+.redact-bar {
+  position: absolute;
+  z-index: 1;
+  background: var(--text);
+  transform-origin: right center;
+  pointer-events: none;
+}
+.redact-bar.is-retracting {
+  transform: scaleX(0);
+  transition: transform 250ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.reveal-pending { opacity: 0; }
+.reveal-in {
+  opacity: 1;
+  transition: opacity 500ms var(--ease);
+}
+
+/* ---------- Small screens ---------- */
+
+/* The margin column drops below the abstract and the item is one column
+   again. The results table keeps scrolling inside .results-wrap, so the page
+   itself never scrolls sideways. */
+@media (max-width: 899px) {
+  .item:has(.item-aside) { display: block; }
+  .item-aside { margin-top: var(--space-4); }
+  .item-aside .item-links > * { display: inline; }
+  .item-aside .item-links > * + * { margin-left: var(--space-3); margin-top: 0; }
+  .js .item-aside .copy-bib { display: inline; }
+  .keyfig { max-width: var(--prose); }
+}
+
+/* The photo moves above the about text but stays below the name, so the
+   first thing on a phone is still who this is. */
+@media (max-width: 899px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "name"
+      "photo"
+      "text"
+      "acts";
+  }
+  .hero-aside { margin-bottom: var(--space-4); }
+}
+
+@media (max-width: 767px) {
+  .abstract > p { text-align: left; }
+  .about-text > p { text-align: left; }
+  .work-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   CV page
+   Each section is one table set like a results table: small-caps column
+   heads over a rule, light rules between rows, footnotes in a Notes line.
+   No JavaScript on this page; everything is in the HTML.
+   ========================================================================== */
+
+.cv-lede {
+  max-width: var(--content);
+  margin: 0 0 var(--space-5);
+  text-indent: 0;
+}
+.cv-lede a { margin-left: var(--space-2); }
+
+.cv-group {
+  max-width: var(--content);
+  margin-top: var(--space-5);
+}
+.cv-group > h2 {
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--slate);
+}
+
+.cv {
+  width: 100%;
+  border-collapse: collapse;
+  line-height: 1.35;
+}
+.cv .col-date  { width: 11rem; }
+.cv .col-place { width: 8rem; }
+.cv .col-fig   { width: 11rem; }
+
+.cv th,
+.cv td {
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  vertical-align: top;
+  text-align: left;
+  font-weight: 400;
+}
+.cv th:last-child,
+.cv td:last-child { padding-right: 0; text-align: right; }
+
+.cv thead th {
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--text);
+  color: var(--slate);
+  font-size: 0.9rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+}
+.cv tbody tr + tr > * { border-top: 1px solid var(--rule); }
+.cv tbody tr:last-child > * { border-bottom: 1px solid var(--text); }
+
+/* Dates, places and figures: lining figures, no hyphens, never broken */
+.cv-date,
+.cv-place,
+.cv-fig {
+  hyphens: none;
+  -webkit-hyphens: none;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.cv-date { white-space: nowrap; }
+
+.cv-title { display: block; font-weight: 700; }
+.cv-sub   { display: block; font-style: italic; }
+
+.cv-main p,
+.cv-main ul {
+  max-width: var(--prose);
+  margin: var(--space-2) 0 0;
+  font-size: 0.95rem;
+  text-indent: 0;
+}
+.cv-main ul { padding-left: 1.1rem; }
+.cv-main li + li { margin-top: var(--space-1); }
+
+.cv-fig .pending { color: var(--slate); font-style: italic; }
+
+/* Footnote markers, and the note they point to lights up when followed */
+.fn {
+  font-size: 0.7em;
+  line-height: 0;
+  margin-left: 0.1em;
+}
+.fn a { text-decoration: none; }
+.cv-notes {
+  max-width: var(--prose);
+  margin: var(--space-2) 0 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  text-indent: 0;
+}
+.cv-notes sup { font-size: 0.75em; }
+.cv-notes span:target { background: var(--rule); }
+
+/* Skills: a short list in the same grid as the tables above */
+.cv-skills { margin: var(--space-3) 0 0; }
+.cv-skills > div {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  padding: var(--space-1) 0;
+}
+.cv-skills dt {
+  color: var(--slate);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+}
+.cv-skills dd { margin: 0; }
+
+/* ---------- CV on small screens ----------
+   Each row becomes a block: date and place on one small-caps line, the
+   entry under it, the figure last. The column heads stay for screen
+   readers only. */
+@media (max-width: 767px) {
+  .cv, .cv tbody { display: block; width: auto; }
+  .cv thead {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  .cv tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.5em;
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--rule);
+  }
+  .cv tbody tr:first-child { border-top: 1px solid var(--text); }
+  .cv tbody tr:last-child  { border-bottom: 1px solid var(--text); }
+  .cv tbody tr > * {
+    display: block;
+    padding: 0;
+    border: 0 !important;
+    text-align: left !important;
+  }
+
+  /* date and place share one small-caps line above the entry */
+  .cv-date,
+  .cv-place {
+    color: var(--slate);
+    font-size: 0.9rem;
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.04em;
+  }
+  .cv-place:not(:empty)::before { content: "\00B7\00A0"; }
+  .cv-main { flex-basis: 100%; order: 3; margin-top: var(--space-1); }
+  .cv-fig  { flex-basis: 100%; order: 4; margin-top: var(--space-2); }
+  .cv-fig:empty, .cv-place:empty { display: none !important; }
+
+  .cv-skills > div { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Home page, added 2026-10-25: lead line, featured paper, figures
+   ========================================================================== */
+
+/* The first line of the about, set larger. Left aligned, like everything in
+   the about now, so the block reads as two sentences rather than a wall. */
+.about-text > p.lead {
+  margin-bottom: var(--space-3);
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+/* ---------- Featured paper: text on the left, its figure on the right --- */
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  column-gap: var(--space-5);
+  align-items: start;
+  margin-top: var(--space-3);
+}
+.feature .work-title a { color: inherit; text-decoration: none; }
+.feature .work-title a:hover { text-decoration: underline; }
+
+/* Three numbers in a row, set like the keyfig box on the research page */
+.figrow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--text);
+  border-bottom: 1px solid var(--text);
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.figrow dt {
+  order: 2;
+  color: var(--slate);
+  font-size: 0.85rem;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.figrow > div { display: flex; flex-direction: column; }
+.figrow dd {
+  order: 1;
+  margin: 0;
+  font-size: 1.9rem;
+  line-height: 1.1;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.figrow .u { font-size: 0.55em; margin-left: 0.1em; }
+
+.work-thesis {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+  max-width: var(--prose);
+}
+
+/* ---------- Figures (home and research) ----------
+   Inline SVG drawn in the site's own ink. Colours come from the tokens, so
+   dark mode works without touching the SVG. */
+.fig { margin: 0; }
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--font-serif);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+  touch-action: pan-y;
+}
+.chart:focus { outline: none; }
+.chart:focus-visible { outline: 2px solid var(--red-ink); outline-offset: 4px; }
+
+.chart .grid  { stroke: var(--rule); stroke-width: 0.6; stroke-dasharray: 1 3; }
+.chart .axis  { stroke: var(--text); stroke-width: 1; }
+.chart .zero  { stroke: var(--text); stroke-width: 0.8; }
+.chart .event { stroke: var(--slate); stroke-width: 0.8; stroke-dasharray: 3 3; }
+.chart .tick  { fill: var(--text); font-size: 13px; }
+.chart .note  { fill: var(--slate); font-size: 11.5px; font-style: italic; }
+
+.chart .line   { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.chart .line-a { stroke: var(--red-ink); stroke-width: 2.2; }
+.chart .line-b { stroke: var(--slate); stroke-width: 1.6; }
+.chart .band   { fill: var(--red-ink); opacity: 0.16; }
+.chart .dot    { fill: var(--red-ink); }
+
+.chart .end   { font-size: 13px; }
+.chart .end-a { fill: var(--red-ink); }
+.chart .end-b { fill: var(--slate); }
+.chart .end-sub { fill: var(--red-ink); font-size: 13px; }
+
+.chart .cursor     { stroke: var(--text); stroke-width: 0.8; }
+.chart .cursor-dot { fill: var(--surface); stroke: var(--text); stroke-width: 1.5; }
+.fig.is-interactive .chart { cursor: crosshair; }
+
+.fig figcaption {
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+  line-height: 1.35;
+  text-indent: 0;
+}
+.fig-num { font-variant-caps: all-small-caps; letter-spacing: 0.04em; }
+
+/* The readout only means anything once figures.js is running */
+.fig-readout { display: none; }
+.fig.is-interactive .fig-readout {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--slate);
+  font-style: italic;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.fig.is-interactive .fig-readout.is-live { color: var(--text); font-style: normal; }
+
+/* Research page: the event study sits under the abstract, before the table */
+.es-fig { max-width: 40rem; margin-top: var(--space-4); }
+
+/* ---------- Footer colophon ---------- */
+.site-footer .colophon {
+  margin-top: var(--space-1);
+  color: var(--slate);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+@media (max-width: 899px) {
+  .feature { grid-template-columns: 1fr; }
+  .feature-fig { margin-top: var(--space-4); }
+}
+@media (max-width: 767px) {
+  .about-text > p.lead { font-size: 1.3rem; }
+  .figrow dd { font-size: 1.5rem; }
+  .chart .tick, .chart .end, .chart .end-sub { font-size: 20px; }
+  .chart .note { font-size: 18px; }
+  .chart .line-a { stroke-width: 3; }
+  .chart .line-b { stroke-width: 2.2; }
+}

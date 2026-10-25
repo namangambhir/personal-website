@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Naman Gambhir</title>
+  <meta name="description" content="Naman Gambhir, Master of Economics student at Monash University, working on what happens when policy and prices are set without the full picture.">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Naman Gambhir">
+  <meta property="og:description" content="Master of Economics student at Monash University. Working paper: extending Medicare bulk-billing incentives to all patients raised bulk billing by 6.3 percentage points.">
+  <meta property="og:locale" content="en_AU">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400&amp;display=swap">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/offprint.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="assets/js/home.js" defer></script>
+  <script src="assets/js/figures.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav aria-label="Sections">
+      <ul class="tabs">
+        <li><a href="index.html" aria-current="page">1 About</a></li>
+        <li><a href="cv.html">2 CV</a></li>
+        <li><a href="research.html">3 Research</a></li>
+        <li><a href="contact.html">4 Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- =====================================================================
+         HERO
+         Name, a short about, two buttons, and the portrait.
+         The first paragraph (class "lead") is set larger. home.js lays a
+         bar over each rendered line and retracts it; with the script absent
+         the text is simply here.
+         ===================================================================== -->
+    <section class="hero">
+      <h1 class="hero-name">Naman Gambhir</h1>
+
+      <div class="about-text">
+        <p class="lead">I study what happens when policy and prices are set without the full picture.</p>
+        <p>I&rsquo;m a Master of Economics student at Monash. My working paper measures what Australia bought when it extended bulk-billing incentives to every patient; my thesis asks what EV lessors lose by pricing batteries they can&rsquo;t see. Before that I built datasets at D.E. Shaw and drafted parliamentary questions in New Delhi.</p>
+      </div>
+
+      <p class="hero-actions">
+        <a class="btn btn-primary" href="mailto:ngam0013@student.monash.edu">Email</a>
+        <a class="btn" href="assets/files/gambhir-bulk-billing-2026.pdf" target="_blank" rel="noopener">Working paper</a>
+        <!-- TODO: add these back once the addresses exist:
+        <a class="btn" href="[GITHUB URL]" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="[SSRN AUTHOR PAGE URL]" target="_blank" rel="noopener">SSRN</a>
+        -->
+      </p>
+
+      <div class="hero-aside">
+        <img class="portrait" src="assets/img/portrait.jpg" width="440" height="440"
+             loading="eager"
+             alt="Naman Gambhir, smiling, wearing glasses and a dark shirt.">
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         CURRENT WORK
+         The working paper as a feature with its figure, then the thesis.
+         The figure is an inline SVG drawn from the paper's Figure 1 data;
+         figures.js adds the draw-in and the hover readout.
+         ===================================================================== -->
+    <section class="current-work" aria-labelledby="h-current">
+      <h2 id="h-current">Current work</h2>
+
+      <article class="feature">
+        <div class="feature-text">
+          <p class="work-label">Working paper &middot; October 2026</p>
+          <h3 class="work-title"><a href="research.html">Extending Bulk-Billing Incentives to All Patients: Evidence from Australia&rsquo;s November 2025 Medicare Reform</a></h3>
+          <p class="work-desc">In November 2025 Medicare started paying GPs the bulk-billing incentive for every patient, not just children and concession card holders. Comparing working-age adults with children across 393 local government areas, I find the reform raised bulk billing by 6.3 percentage points, at an incentive cost of about $187 for each additional bulk-billed visit.</p>
+
+          <dl class="figrow">
+            <div><dt>Effect</dt><dd>6.3<span class="u">pp</span></dd></div>
+            <div><dt>Cost per extra visit</dt><dd>$187</dd></div>
+            <div><dt>Of new spending, on visits bulk billed anyway</dt><dd>88<span class="u">%</span></dd></div>
+          </dl>
+
+          <p class="item-links">
+            <a href="assets/files/gambhir-bulk-billing-2026.pdf" target="_blank" rel="noopener">Paper (PDF)</a>
+            <a href="research.html">Abstract and results</a>
+          </p>
+        </div>
+
+        <figure class="fig feature-fig">
+          <svg class="chart" viewBox="0 0 640 348" role="img" aria-labelledby="fig-home-title fig-home-desc" data-chart="home">
+  <title id="fig-home-title">Bulk-billing rate of GP attendances, January 2022 to June 2026</title>
+  <desc id="fig-home-desc">Children stay near 90 percent throughout. Working-age adults fall from about 85 percent in 2022 to about 69 percent by late 2023 and stay there until October 2025 at 69.7 percent, then jump to 75.1 percent in November 2025 and reach 78.3 percent by June 2026.</desc>
+  <line class="grid" x1="44" x2="522" y1="312.0" y2="312.0"/><text class="tick" x="36" y="316.0" text-anchor="end">65</text><line class="grid" x1="44" x2="522" y1="264.7" y2="264.7"/><text class="tick" x="36" y="268.7" text-anchor="end">70</text><line class="grid" x1="44" x2="522" y1="217.3" y2="217.3"/><text class="tick" x="36" y="221.3" text-anchor="end">75</text><line class="grid" x1="44" x2="522" y1="170.0" y2="170.0"/><text class="tick" x="36" y="174.0" text-anchor="end">80</text><line class="grid" x1="44" x2="522" y1="122.7" y2="122.7"/><text class="tick" x="36" y="126.7" text-anchor="end">85</text><line class="grid" x1="44" x2="522" y1="75.3" y2="75.3"/><text class="tick" x="36" y="79.3" text-anchor="end">90</text><line class="grid" x1="44" x2="522" y1="28.0" y2="28.0"/><text class="tick" x="36" y="32.0" text-anchor="end">95</text><text class="tick" x="44.0" y="332" text-anchor="middle">2022</text><line class="axis" x1="44.0" x2="44.0" y1="312" y2="317"/><text class="tick" x="152.2" y="332" text-anchor="middle">2023</text><line class="axis" x1="152.2" x2="152.2" y1="312" y2="317"/><text class="tick" x="260.5" y="332" text-anchor="middle">2024</text><line class="axis" x1="260.5" x2="260.5" y1="312" y2="317"/><text class="tick" x="368.7" y="332" text-anchor="middle">2025</text><line class="axis" x1="368.7" x2="368.7" y1="312" y2="317"/><text class="tick" x="476.9" y="332" text-anchor="middle">2026</text><line class="axis" x1="476.9" x2="476.9" y1="312" y2="317"/>
+  <line class="axis" x1="44" x2="522" y1="312" y2="312"/>
+  <line class="event" x1="237.9" x2="237.9" y1="28" y2="312"/><text class="note" x="243.9" y="127.4">Nov 2023:<tspan x="243.9" dy="1.15em">incentive tripled</tspan></text>
+  <line class="event" x1="454.4" x2="454.4" y1="28" y2="312"/><text class="note" x="460.4" y="127.4">Nov 2025:<tspan x="460.4" dy="1.15em">all patients</tspan></text>
+  <polyline class="line line-b" points="44.0,23.4 53.0,41.3 62.0,34.9 71.1,41.4 80.1,42.5 89.1,46.5 98.1,62.6 107.1,70.3 116.2,76.0 125.2,80.7 134.2,81.6 143.2,89.1 152.2,92.9 161.2,93.8 170.3,93.2 179.3,90.2 188.3,85.5 197.3,90.6 206.3,97.2 215.4,100.0 224.4,101.5 233.4,104.5 242.4,85.7 251.4,89.4 260.5,86.2 269.5,82.3 278.5,81.5 287.5,74.6 296.5,68.3 305.5,72.2 314.6,72.3 323.6,76.5 332.6,75.5 341.6,74.7 350.6,76.2 359.7,77.3 368.7,76.2 377.7,74.9 386.7,75.0 395.7,66.5 404.8,63.3 413.8,67.6 422.8,68.4 431.8,73.1 440.8,70.6 449.8,70.0 458.9,67.6 467.9,67.4 476.9,68.5 485.9,65.6 494.9,64.0 504.0,54.0 513.0,55.2 522.0,58.1"/>
+  <polyline class="line line-a" points="44.0,108.6 53.0,124.7 62.0,139.7 71.1,140.7 80.1,145.2 89.1,151.7 98.1,162.8 107.1,185.1 116.2,198.4 125.2,214.2 134.2,219.7 143.2,226.7 152.2,247.3 161.2,250.8 170.3,252.5 179.3,245.6 188.3,247.0 197.3,258.3 206.3,268.7 215.4,271.7 224.4,273.5 233.4,285.5 242.4,278.4 251.4,277.2 260.5,283.8 269.5,278.5 278.5,272.8 287.5,268.4 296.5,262.5 305.5,269.0 314.6,276.3 323.6,276.9 332.6,275.4 341.6,277.8 350.6,277.3 359.7,277.0 368.7,283.7 377.7,277.9 386.7,272.6 395.7,260.9 404.8,258.9 413.8,261.4 422.8,276.3 431.8,274.2 440.8,271.3 449.8,267.5 458.9,216.3 467.9,211.8 476.9,212.8 485.9,206.5 494.9,196.9 504.0,183.8 513.0,181.4 522.0,186.1"/>
+  <text class="end end-b" x="530" y="62.1">Children</text>
+  <text class="end end-a" x="530" y="190.1">Working-age<tspan x="530" dy="1.15em">adults</tspan></text>
+  <text class="tick" x="36" y="18" text-anchor="end">%</text>
+</svg>
+          <script type="application/json" class="fig-data">{"x0":44,"x1":522,"n":54,"labels":["Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026","Apr 2026","May 2026","Jun 2026"],"series":[{"name":"working-age","v":[86.49,84.78,83.2,83.09,82.62,81.93,80.76,78.41,77.0,75.33,74.75,74.01,71.83,71.47,71.29,72.01,71.87,70.67,69.57,69.26,69.07,67.8,68.55,68.68,67.98,68.54,69.14,69.61,70.23,69.54,68.77,68.71,68.87,68.61,68.67,68.7,67.99,68.6,69.16,70.4,70.61,70.34,68.77,68.99,69.3,69.7,75.11,75.58,75.48,76.14,77.16,78.54,78.8,78.3],"y":[108.6,124.7,139.7,140.7,145.2,151.7,162.8,185.1,198.4,214.2,219.7,226.7,247.3,250.8,252.5,245.6,247.0,258.3,268.7,271.7,273.5,285.5,278.4,277.2,283.8,278.5,272.8,268.4,262.5,269.0,276.3,276.9,275.4,277.8,277.3,277.0,283.7,277.9,272.6,260.9,258.9,261.4,276.3,274.2,271.3,267.5,216.3,211.8,212.8,206.5,196.9,183.8,181.4,186.1]},{"name":"children","v":[95.49,93.6,94.27,93.58,93.47,93.05,91.35,90.53,89.93,89.43,89.34,88.55,88.14,88.05,88.11,88.43,88.93,88.39,87.69,87.39,87.24,86.92,88.91,88.51,88.85,89.26,89.35,90.08,90.74,90.33,90.32,89.88,89.98,90.07,89.91,89.79,89.91,90.05,90.03,90.93,91.27,90.82,90.73,90.24,90.5,90.56,90.82,90.84,90.72,91.03,91.2,92.25,92.13,91.82],"y":[23.4,41.3,34.9,41.4,42.5,46.5,62.6,70.3,76.0,80.7,81.6,89.1,92.9,93.8,93.2,90.2,85.5,90.6,97.2,100.0,101.5,104.5,85.7,89.4,86.2,82.3,81.5,74.6,68.3,72.2,72.3,76.5,75.5,74.7,76.2,77.3,76.2,74.9,75.0,66.5,63.3,67.6,68.4,73.1,70.6,70.0,67.6,67.4,68.5,65.6,64.0,54.0,55.2,58.1]}],"unit":"%","top":28,"bottom":312}</script>
+          <figcaption>
+            <span class="fig-num">Figure.</span> Share of GP attendances bulk billed, by age group.
+            Source: AIHW monthly Medicare data; Figure 1 of the paper.
+            <span class="fig-readout" aria-live="polite">Hover or tap the chart to read any month.</span>
+          </figcaption>
+        </figure>
+      </article>
+
+      <article class="work-item work-thesis">
+        <p class="work-label">Master&rsquo;s thesis &middot; in progress</p>
+        <h3 class="work-title">Pricing Battery Wear Without Usage Data</h3>
+        <p class="work-desc">EV lessors set lease prices before they know how hard a battery will be driven. I study what that missing information costs, and what telematics data on battery health would be worth to them.</p>
+      </article>
+
+      <p class="work-more"><a href="research.html">All research</a></p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Naman Gambhir. <a href="mailto:ngam0013@student.monash.edu">ngam0013@student.monash.edu</a>. Last updated October 2026.</p>
+    <p class="colophon">Set in Charis SIL. Plain HTML and CSS, no trackers. The figures are drawn from the paper&rsquo;s own data.</p>
+  </footer>
+</body>
+</html>
