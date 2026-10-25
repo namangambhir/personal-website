@@ -3,26 +3,31 @@
    plain Latin text in the HTML, and the gloss under it works on hover and
    focus with CSS alone.
 
-   This adds one thing. On the first visit in a session the name appears in
-   Devanagari, holds for a moment, and crossfades to Latin. The script adds
+   This adds one thing. When the home page is opened from outside the site
+   (a link, a bookmark, a reload) the name appears in Devanagari, holds for
+   a moment, and crossfades to Latin. Coming back from another page of the
+   site skips it, so it never gets in the way of someone browsing. The script adds
    the Devanagari itself, so if it fails the page simply shows the Latin
    name. Any click, key or scroll skips straight to the end. */
 (function () {
   'use strict';
 
-  var HOLD_MS = 900;       /* how long the Devanagari stays on screen */
+  var HOLD_MS = 1100;      /* how long the Devanagari stays on screen */
   var SWAP_MS = 650;       /* length of the crossfade */
   var FONT_WAIT_MS = 1000; /* give up waiting for the Devanagari font after this */
-  var KEY = 'ng-name-shown';
 
   var name = document.querySelector('.hero-name');
   if (!name) return;
 
   var reduced = window.matchMedia &&
                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen = false;
-  try { seen = sessionStorage.getItem(KEY) === '1'; } catch (e) { seen = false; }
-  if (reduced || seen) {
+  var fromSite = false;
+  try {
+    fromSite = !!document.referrer &&
+               new URL(document.referrer).origin === location.origin &&
+               performance.getEntriesByType('navigation')[0].type !== 'reload';
+  } catch (e) { fromSite = false; }
+  if (reduced || fromSite) {
     document.documentElement.classList.remove('name-intro');
     return;
   }
@@ -50,7 +55,6 @@
     document.removeEventListener('keydown', finish);
     window.removeEventListener('scroll', finish);
     cleanup();
-    try { sessionStorage.setItem(KEY, '1'); } catch (e) { /* private mode */ }
   }
 
   function swap() {

@@ -24,8 +24,10 @@
        run, so it doesn't flash. Removed by home.js, or after 3s regardless. */
     (function () {
       try {
-        if (sessionStorage.getItem('ng-name-shown') === '1') return;
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var nav = performance.getEntriesByType('navigation')[0];
+        if (document.referrer && new URL(document.referrer).origin === location.origin &&
+            nav && nav.type !== 'reload') return;
       } catch (e) { return; }
       var h = document.documentElement;
       h.classList.add('name-intro');
@@ -56,7 +58,7 @@
          Name, a short about, two buttons, and the portrait.
          The first paragraph (class "lead") is set larger.
          The name: home.js shows it in Devanagari first and crossfades it to
-         Latin, once per visit. Hovering or focusing the name shows the gloss
+         Latin, when arriving from outside the site. Hovering or focusing the name shows the gloss
          below it, with or without the script.
          ===================================================================== -->
     <section class="hero">
