@@ -2,20 +2,13 @@
 # Everything below stays on this computer and is never pushed or published.
 
 # Personal documents
+Source files/
 *.docx
-Linkedin Export.pdf
-Undergraduate Marksheet.pdf
-Naman Gambhir Resume*.pdf
-main.pdf
-Previous Questions.txt
-My Front Profile.png
-Research Page Update.png
 
 # Build notes and working files
 CLAUDE.md
 INSTRUCTIONS.md
 EDITING.md
-Claude outputs/
 _backup/
 preview.py
 
