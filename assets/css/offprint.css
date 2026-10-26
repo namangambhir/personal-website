@@ -393,9 +393,9 @@
 }
 .work-more { margin: var(--space-4) 0 0; text-indent: 0; }
 
-/* ---------- The name: Devanagari first, then Latin ----------
-   The Latin name is the real text and is always in the HTML. home.js lays
-   the Devanagari over it and crossfades; with no script, nothing moves. */
+/* ---------- The name: palindrome intro ----------
+   The name is the real text and is always in the HTML. home.js lays a
+   letter-by-letter copy over it; with no script, nothing moves. */
 .hero-name {
   position: relative;
   width: fit-content;
@@ -414,7 +414,8 @@
   white-space: pre;
   pointer-events: none;
 }
-.type-text.is-deva { font-family: "Tiro Devanagari Hindi", var(--font-serif); }
+.name-type .ch { visibility: hidden; }
+.name-type .ch.is-on { visibility: visible; }
 .type-caret {
   display: inline-block;
   width: 0.055em;
@@ -442,10 +443,6 @@
   transform: translateY(-0.25rem);
   transition: opacity 200ms var(--ease), transform 200ms var(--ease);
   pointer-events: none;
-}
-.name-gloss [lang="hi"] {
-  font-family: "Tiro Devanagari Hindi", var(--font-serif);
-  font-style: normal;
 }
 .hero-name:hover .name-gloss,
 .hero-name.gloss-peek .name-gloss,
@@ -591,6 +588,8 @@
   text-indent: 0;
 }
 .cv-notes sup { font-size: 0.75em; }
+/* One note per line */
+.cv-notes span[id] { display: block; }
 .cv-notes span:target { background: var(--rule); }
 
 /* Skills: a short list in the same grid as the tables above */

@@ -209,6 +209,7 @@ main h2::before {
   font-variant-numeric: lining-nums;
   font-feature-settings: "lnum" 1;
 }
+main h2.no-num::before { content: none; counter-increment: none; }
 
 /* ---------- Prose ---------- */
 .prose p {

@@ -14,13 +14,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400&amp;display=swap">
-  <!-- Devanagari for the name only; text= keeps the download to these glyphs -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&amp;display=swap&amp;text=%E0%A4%A8%E0%A4%AE%E0%A4%A8%20%E0%A4%97%E0%A4%82%E0%A4%AD%E0%A5%80%E0%A4%B0">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/offprint.css">
   <script>
     document.documentElement.classList.add('js');
-    /* Hide the Latin name before first paint if the Devanagari intro will
+    /* Hide the name before first paint if the palindrome intro will
        run, so it doesn't flash. Removed by home.js, or after 3s regardless. */
     (function () {
       try {
@@ -43,10 +41,10 @@
   <header class="site-header">
     <nav aria-label="Sections">
       <ul class="tabs">
-        <li><a href="index.html" aria-current="page">1 About</a></li>
-        <li><a href="cv.html">2 CV</a></li>
-        <li><a href="research.html">3 Research</a></li>
-        <li><a href="contact.html">4 Contact</a></li>
+        <li><a href="index.html" aria-current="page">1. About</a></li>
+        <li><a href="cv.html">2. CV</a></li>
+        <li><a href="research.html">3. Research</a></li>
+        <li><a href="contact.html">4. Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -57,14 +55,14 @@
          HERO
          Name, a short about, two buttons, and the portrait.
          The first paragraph (class "lead") is set larger.
-         The name: home.js shows it in Devanagari, backspaces it away and
-         types the Latin name in its place.
-         below it, with or without the script.
+         The name: home.js reveals "Naman" from both ends inward (it is a
+         palindrome), then types "Gambhir". The gloss shows on hover or
+         focus, with or without the script.
          ===================================================================== -->
     <section class="hero">
       <h1 class="hero-name" tabindex="0" aria-describedby="name-gloss">
         <span class="name-latin">Naman Gambhir</span>
-        <span class="name-gloss" id="name-gloss"><span lang="hi">नमन गंभीर</span>, literally &ldquo;serious greetings&rdquo;</span>
+        <span class="name-gloss" id="name-gloss">my name literally translates to Namaste <span aria-hidden="true">🙏</span></span>
       </h1>
 
       <div class="about-text">
@@ -95,7 +93,7 @@
          figures.js adds the draw-in and the hover readout.
          ===================================================================== -->
     <section class="current-work" aria-labelledby="h-current">
-      <h2 id="h-current">Current work</h2>
+      <h2 id="h-current" class="no-num">Current work</h2>
 
       <article class="feature">
         <div class="feature-text">
